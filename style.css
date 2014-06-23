@@ -73,3 +73,62 @@ footer{
     clear: both;
     padding: 0.8em 5.33333333%;  /* 48px / 900px */
 }
+
+/*****************     form section                ****************************/
+#form article#main{
+    float: none;
+    margin: auto; /* because of the fixed width this centers the form */
+    text-align: left;
+    width: 600px; /* not repsonive but fixed */
+}
+
+/* need to clear any floats that may exist */
+fieldset{
+    border: 1px solid #00498e;
+    clear: both;  
+}
+/* just pushes content to left side of the box. */
+fieldset.contact{
+    float: left;
+}
+/* when you look at the labels this pushes then next to the input and right
+aligns them. Display block means they are each on their own line. */
+fieldset.contact label{
+    display: block;
+    text-align: right /* pushes the text to the right where they line up */
+        /* the float left above pushes everything back to the left*/
+}
+
+fieldset.contact input{
+    width: 15em; /* works with above to be the same size for the boxes */
+}
+
+fieldset.buttons{
+    border: none;
+}
+
+fieldset.wrapper {
+    border: 0;
+    margin: auto;
+}
+
+fieldset.wrapper legend {
+    color: #00498e;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+fieldset.wrapper > legend {
+    /* i only want the first legend ie if it follows the class wrapper */
+    font-size: 2em;
+}
+
+/***********************************************************************/
+
+label {
+    color: #005cb3;
+    display: block;
+    font-size: .9em;
+    font-weight: bold;
+}
