@@ -21,7 +21,7 @@ function securityCheck($form = false) {
         }
     }
 
-    return false; // $status;
+    return $status;
 }
 
 ?>
