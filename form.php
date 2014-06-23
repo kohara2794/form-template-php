@@ -31,7 +31,7 @@ $yourURL = $domain . $phpSelf;
 //
 // Initialize variables one for each form element
 // in the order they appear on the form
-
+$firstName = "";
 $email = "youremail@uvm.edu";
 
 
@@ -41,7 +41,7 @@ $email = "youremail@uvm.edu";
 //
 // Initialize Error Flags one for each form element we validate
 // in the order they appear in section 1c.
-
+$firstNameERROR = false;
 $emailERROR = false;
 
 //%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
@@ -77,8 +77,8 @@ if (isset($_POST["btnSubmit"])) {
     // remove any potential JavaScript or html code from users input on the
     // form. Note it is best to follow the same order as declared in section 1c.
 
-    
-    
+    $firstName = htmlentities($_POST["txtFirstName"], ENT_QUOTES, "UTF-8");
+    $dataRecord[] = $firstName;
 
 
     $email = filter_var($_POST["txtEmail"], FILTER_SANITIZE_EMAIL);
@@ -96,13 +96,13 @@ if (isset($_POST["btnSubmit"])) {
     // will be in the order they appear. errorMsg will be displayed on the form
     // see section 3b. The error flag ($emailERROR) will be used in section 3c.
 
-    
-        
-        
-    
-        
-        
-    
+    if ($firstName == "") {
+        $errorMsg[] = "Please enter your first name";
+        $firstNameERROR = true;
+    } elseif (!verifyAlphaNum($firstName)) {
+        $errorMsg[] = "Your first name appears to have extra character.";
+        $firstNameERROR = true;
+    }
 
     if ($email == "") {
         $errorMsg[] = "Please enter your email address";
@@ -282,14 +282,14 @@ if (isset($_POST["btnSubmit"])) {
 
                     <fieldset class="contact">
                         <legend>Contact Information</legend>
-                        
-                            
-                                   
-                                   
-                                   
-                                   
-                                   
-                        
+                        <label for="txtFirstName" class="required">First Name
+                            <input type="text" id="txtFirstName" name="txtFirstName"
+                                   value="<?php print $firstName; ?>"
+                                   tabindex="100" maxlength="45" placeholder="Enter your first name"
+                                   <?php if ($firstNameERROR) print 'class="mistake"'; ?>
+                                   onfocus="this.select()"
+                                   autofocus>
+                        </label>
                         
                         <label for="txtEmail" class="required">Email
                             <input type="text" id="txtEmail" name="txtEmail"
@@ -297,7 +297,7 @@ if (isset($_POST["btnSubmit"])) {
                                    tabindex="120" maxlength="45" placeholder="Enter a valid email address"
                                    <?php if ($emailERROR) print 'class="mistake"'; ?>
                                    onfocus="this.select()" 
-                                   autofocus>
+                                   >
                         </label>
                     </fieldset> <!-- ends contact -->
                     
