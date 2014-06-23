@@ -21,8 +21,8 @@ if ($debug)
 //
 // SECTION: 1b Security
 //
-// 
-
+// define security variable to be used in SECTION 2a.
+$yourURL = $domain . $phpSelf;
 
 
 //%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
@@ -59,17 +59,17 @@ $email = "youremail@uvm.edu";
 //
 // SECTION: 2 Process for when the form is submitted
 //
-
+if (isset($_POST["btnSubmit"])) {
 
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
     // SECTION: 2a Security
     // 
-    
-        
-        
-        
-    
+    if (!securityCheck(true)) {
+        $msg = "<p>Sorry you cannot access this page. ";
+        $msg.= "Security breach detected and reported</p>";
+        die($msg);
+    }
     
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     //
@@ -188,7 +188,7 @@ $email = "youremail@uvm.edu";
         
     
     
-
+} // ends if form was submitted.
 
 //#############################################################################
 //
