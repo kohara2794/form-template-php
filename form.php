@@ -48,13 +48,13 @@ $emailERROR = false;
 //
 // SECTION: 1e misc variables
 //
-
 // create array to hold error messages filled (if any) in 2d displayed in 3c.
 $errorMsg = array();
 
 // array used to hold form values that will be written to a CSV file
 $dataRecord = array();
 
+$mailed=false; // have we mailed the information to the user?
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //
 // SECTION: 2 Process for when the form is submitted
@@ -151,40 +151,40 @@ if (isset($_POST["btnSubmit"])) {
         //
         // SECTION: 2f Create message
         //
-        // 
-        // 
+        // build a message to display on the screen in section 3a and to mail
+        // to the person filling out the form (section 2g).
 
-        
+        $message = '<h2>Your information.</h2>';
 
-        
+        foreach ($_POST as $key => $value) {
 
-            
+            $message .= "<p>";
 
-            
+            $camelCase = preg_split('/(?=[A-Z])/', substr($key, 3));
 
-            
-                
-            
-            
-        
+            foreach ($camelCase as $one) {
+                $message .= $one . " ";
+            }
+            $message .= " = " . htmlentities($value, ENT_QUOTES, "UTF-8") . "</p>";
+        }
 
 
         //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         //
         // SECTION: 2g Mail to user
         //
-        // 
-        // 
-        
-        
-        
-        
+        // Process for mailing a message which contains the forms data
+        // the message was built in section 2f.
+        $to = $email; // the person who filled out the form
+        $cc = "";
+        $bcc = "";
+        $from = "WRONG site <noreply@yoursite.com>";
 
-        
-        
-        
+        // subject of mail should make sense to your form
+        $todaysDate = strftime("%x");
+        $subject = "Research Study: " . $todaysDate;
 
-        
+        $mailed = sendMail($to, $cc, $bcc, $from, $subject, $message);
         
     } // end form is valid
     
@@ -211,21 +211,21 @@ if (isset($_POST["btnSubmit"])) {
     if (isset($_POST["btnSubmit"]) AND empty($errorMsg)) { // closing of if marked with: end body submit
         print "<h1>Your Request has ";
 
-        
-            
-        
+        if (!$mailed) {
+            print "not ";
+        }
 
         print "been processed</h1>";
 
-        
-        
-            
-        
-        
-        
-        
+        print "<p>A copy of this message has ";
+        if (!$mailed) {
+            print "not ";
+        }
+        print "been sent</p>";
+        print "<p>To: " . $email . "</p>";
+        print "<p>Mail Message:</p>";
 
-        
+        print $message;
     } else {
 
 

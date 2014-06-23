@@ -52,7 +52,7 @@ require_once('lib/security.php');
 
 if ($path_parts['filename'] == "form") {
     include "lib/validation-functions.php";
-
+    include "lib/mail-message.php";
 }
 ?>	
 
