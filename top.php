@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="style.css" type="text/css" media="screen">
 
 <?php
+$debug=false;
+
 // %^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%
 //
 // PATH SETUP
